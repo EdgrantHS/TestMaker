@@ -3,8 +3,24 @@ from testmaker import TestMaker as TM
 # from Extractor import Extractor as EX
 
 if __name__ == '__main__':
-    input_test = ["10 3 1 2 3", "25 5 10 10 10", "1 1 2", "10 4 10 0 0 0", "10 5 10 0 0 0 1", "10 5 10 0 0 0 0", "0 1 0", "0 0", "0 10 0 0 1", "1 1"]
-    expected_output = ["3", "2", "0", "4", "4", "5", "1", "0", "2", "1"]
+    # input_test = ["1", "3", "2", "6", "4", "3", "1"]
+    # open the file in read mode
+    file = open("input.txt", "r")
 
-    checker = UT("code", input_test=input_test, output_test=expected_output)
-    checker.run()
+    # create an empty array
+    array = []
+
+    # loop through each line in the file
+    for line in file:
+        # strip the newline character and append the line to the array
+        array.append(line.strip())
+
+    # close the file
+    file.close()
+
+    # print the array
+    print(array)
+
+    checker = TM("code", input_test=array)
+    real_output = checker.run()
+    print(real_output)
