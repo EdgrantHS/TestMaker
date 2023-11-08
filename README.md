@@ -6,3 +6,6 @@ Contoh:
     6 5 2
     2 5 3
 Nanti arraynya jadi {"1 5 2", "6 5 2", "2 5 3"}
+
+TODO:
+buat generate random input
