@@ -2,38 +2,67 @@ import os, subprocess
 from time import sleep
 import re
 
-# class Student:
-#     def __init__(self, name, score, message, kode_aslab, regex_output):
-#         """
-#         The function initializes an object with attributes such as name, score, message, kode_aslab, and
-#         regex_output.
-        
-#         :param name: The name parameter is a string that represents the name of the object being
-#         initialized
-#         :param score: The `score` parameter is a float that represents the score of a student. It is
-#         used to store and manipulate the score value
-#         :param message: The `message` parameter is a string that represents a message or description
-#         associated with an object. It can be used to provide additional information or context about the
-#         object
-#         :param kode_aslab: The parameter "kode_aslab" is a variable that represents the code or
-#         identification of the assistant lab. It could be a string or any other data type that is used to
-#         uniquely identify the lab assistant
-#         :param regex_output: The `regex_output` parameter is a boolean value that indicates whether the
-#         output of a regular expression match is expected or not. If `regex_output` is `True`, it means
-#         that the output of the regular expression match is expected. If `regex_output` is `False`, it
-#         means that the
-#         """
-#         self.name = name
-#         self.score:float = score
-#         self.message = message
-#         self.kode_aslab = kode_aslab
-#         self.regex_output:bool = regex_output
+class GenerateTest:
+    @staticmethod
+    def read_file_or_ask_user(filename):
+        try:
+            with open(filename, 'r') as file:
+                data = file.readlines()
+                # for line in file:
+                #     # strip the newline character and append the line to the array
+                #     array.append(line.strip())
+                if not data:
+                    raise ValueError("File is empty")
+                    print(f"Failed to read file: {e}")
+                    num_inputs = int(input("Enter the number of inputs in each line: "))
+                    num_lines = int(input("Enter the number of lines (test cases): "))
+                    return num_inputs, num_lines
+                return data
+        except Exception as e:
+            print(f"Failed to read file: {e}")
+            # num_inputs = int(input("Enter the number of inputs in each line: "))
+            num_lines = int(input("Enter the number of lines (test cases): "))
+            # return num_inputs, num_lines
+            outer = []
+            for i in range(num_lines):
+                inner = ""
+                for j in range(num_inputs):
+                    if (j == num_inputs-1):
+                        inner = inner + str(random.randint(0, 100))
+                    else:
+                        inner = inner + str(random.randint(0, 100)) + " "
+                outer.append(inner)
+            return outer
+
+    # @staticmethod
+    # def remove_substring(strings, substring):
+    #     new_strings = []
+    #     for string in strings:
+    #         new_string = string.replace(substring, '')
+    #         new_strings.append(new_string)
+    #     return new_strings
+
+    @staticmethod
+    def generate_test():
+        # open the file in read mode
+        filename = "input.txt"
+        input_list = GenerateTest.read_file_or_ask_user(filename)
+
+        # remove \n in list
+        # GenerateTest.remove_substring(input_list, '\n')
+
+        # print the array
+        # print(input_list)
+
+        generator = TestMaker("KJ", input_test=input_list)
+        real_output = generator.run()
+        return input_list, real_output
 
 class TestMaker:
     def __init__(self, folder_name, **kwargs):
         """
         The function initializes various attributes of an object, including a folder name, filename,
-        input test, expected output, actual output, actual output list, and a student object.
+        input test, expected output, actual output, and actual output list.
         
         :param folder_name: The `folder_name` parameter is used to specify the name of the folder where
         the files will be stored or retrieved from
@@ -42,7 +71,6 @@ class TestMaker:
         self.filename = None
         self.input_test = kwargs.get("input_test")
         self.expected_output = kwargs.get("output_test")
-        self.kode_aslab = kwargs.get("kode_aslab")
         self.actual_output = None
         self.actual_output_list = []
 
