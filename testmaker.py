@@ -23,17 +23,22 @@ class GenerateTest:
             print(f"Failed to read file: {e}")
             # num_inputs = int(input("Enter the number of inputs in each line: "))
             num_lines = int(input("Enter the number of lines (test cases): "))
-            num_inputs = int(input("Enter the number of inputs (inputs in each testcase): "))
+            # num_inputs = int(input("Enter the number of inputs (inputs in each testcase): "))
             # return num_inputs, num_lines
             outer = []
+
+            # A, B, C, or D
+            arr = ['A', 'B', 'C',' D']
+
             for i in range(num_lines):
                 inner = ""
-                for j in range(num_inputs):
-                    if (j == num_inputs-1):
-                        inner = inner + str(random.randint(0, 100))
-                    else:
-                        inner = inner + str(random.randint(0, 100)) + " "
+                sks = random.randint(1, 24)
+                inner = inner + str(sks) + " "
+                for j in range(sks):
+                    inner = inner + str(arr[random.randint(0, 3)]) + " "
+                inner = inner + str(-1)
                 outer.append(inner)
+                # print (outer)
             return outer
 
     # @staticmethod
